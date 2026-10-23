@@ -59,11 +59,11 @@ export default function ImpactTab({ site, stats, rows }) {
           <p className="card__subtitle">Cumulative mass captured by mycelium</p>
           <div className="impact-row">
             <div className="kpi kpi--violet">
-              <div className="kpi__label">Nitrogen (N)</div>
+              <div className="kpi__label">Nitrogen</div>
               <div className="kpi__value">{fmt(nRemoved, 0)} <span className="kpi__unit">kg</span></div>
             </div>
             <div className="kpi kpi--violet">
-              <div className="kpi__label">Phosphorus (P)</div>
+              <div className="kpi__label">Phosphate</div>
               <div className="kpi__value">{fmt(pRemoved, 2)} <span className="kpi__unit">kg</span></div>
             </div>
           </div>
@@ -75,7 +75,7 @@ export default function ImpactTab({ site, stats, rows }) {
 
           <div className="progress">
             <div className="progress__head">
-              <span className="progress__label">Phosphorus — {site.baseline_p_mgL} → {site.target_p_mgL} mg/L</span>
+              <span className="progress__label">Phosphate — {site.baseline_p_mgL} → {site.target_p_mgL} mg/L</span>
               <span className="progress__pct">{Math.round(pProg)}%</span>
             </div>
             <div className="progress__track">
@@ -122,12 +122,12 @@ export default function ImpactTab({ site, stats, rows }) {
         <section className="card anim-fade-up" style={{ animationDelay: ".08s" }}>
           <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start" }}>
             <div>
-              <h2 className="card__title">Compliance Trajectory</h2>
+              <h2 className="card__title">Contribution to Compliance Trajectory</h2>
               <p className="card__subtitle">Monthly outlet concentration vs. target &amp; projection</p>
             </div>
             <div className="segmented">
-              <button className={`segmented__btn ${nutrient === "p" ? "is-active" : ""}`} onClick={() => setNutrient("p")}>P</button>
-              <button className={`segmented__btn ${nutrient === "n" ? "is-active" : ""}`} onClick={() => setNutrient("n")}>N</button>
+              <button className={`segmented__btn ${nutrient === "p" ? "is-active" : ""}`} onClick={() => setNutrient("p")}>Phosphate</button>
+              <button className={`segmented__btn ${nutrient === "n" ? "is-active" : ""}`} onClick={() => setNutrient("n")}>Nitrogen</button>
             </div>
           </div>
           <ComplianceChart rows={rows} nutrient={nutrient} target={compTarget} />
@@ -140,13 +140,13 @@ export default function ImpactTab({ site, stats, rows }) {
               <p className="card__subtitle">Energy-driven filtration economics</p>
             </div>
             <div className="segmented">
-              <button className={`segmented__btn ${costIO === "n" ? "is-active" : ""}`} onClick={() => setCostIO("n")}>per kg N</button>
-              <button className={`segmented__btn ${costIO === "p" ? "is-active" : ""}`} onClick={() => setCostIO("p")}>per kg P</button>
+              <button className={`segmented__btn ${costIO === "n" ? "is-active" : ""}`} onClick={() => setCostIO("n")}>per kg Nitrogen</button>
+              <button className={`segmented__btn ${costIO === "p" ? "is-active" : ""}`} onClick={() => setCostIO("p")}>per kg Phosphate</button>
             </div>
           </div>
           <div className="impact-row">
             <div className="kpi kpi--amber">
-              <div className="kpi__label">Cost / kg {costIO.toUpperCase()}</div>
+              <div className="kpi__label">Cost / kg {costIO === "n" ? "Nitrogen" : "Phosphate"}</div>
               <div className="kpi__value">€{fmt(costPerKg, 2)}</div>
             </div>
             <div className="kpi kpi--amber">

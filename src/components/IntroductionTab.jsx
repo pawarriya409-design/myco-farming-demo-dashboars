@@ -3,16 +3,16 @@ import SitesMap from "./SitesMap.jsx";
 import Gauge from "./Gauge.jsx";
 import PropositionDiagram from "./PropositionDiagram.jsx";
 import { fmt, fmtDate, computeAlerts } from "../lib/data.js";
-import { BIOFLOW_MONITORING_MAP } from "../lib/monitoringMap.js";
+import { MYCO_MONITORING_MAP } from "../lib/monitoringMap.js";
 
 const METRIC_ROWS = [
   ["Active Months", "active_months", "mo"],
-  ["Area", "area_ha", "ha"],
-  ["Baseline Concentration", "baseline_p_mgL", "mg/L P"],
-  ["Depth", "depth_m", "m"],
   ["Dry Months", "dry_months", "mo"],
+  ["Area", "area_ha", "ha"],
+  ["Depth", "depth_m", "m"],
   ["Installed Flow Rate", "capacity_m3h", "m³/h"],
-  ["Target Concentration", "target_p_mgL", "mg/L P"],
+  ["Baseline Concentration", "baseline_p_mgL", "mg/L Phosphate"],
+  ["Target Concentration", "target_p_mgL", "mg/L Phosphate"],
 ];
 
 export default function IntroductionTab({ sites, site, stats, rows }) {
@@ -37,7 +37,7 @@ export default function IntroductionTab({ sites, site, stats, rows }) {
     ? Math.min(100, Math.max(0, ((nBaseline - nLatest) / (nBaseline - nTarget)) * 100))
     : 0;
 
-  const description = `The recommended solution in this case is a ${site.system_type} with a capacity of ${site.capacity_m3h} m³/h flow rate capacity and ${site.modules} Myco Islands for remediation of source water. The system is designed to operate in a closed-loop configuration, where the mycelium biomass is continuously monitored and replaced as needed to maintain optimal filtration performance.`;
+  const description = `The recommended solution in this case is a ${site.system_type} with a capacity of ${site.capacity_m3h} m³/h flow rate capacity and ${site.modules} MycoIslands for remediation of source water. The system is designed to operate in a closed-loop configuration, where the mycelium biomass is continuously monitored and replaced as needed to maintain optimal filtration performance.`;
 
   return (
     <div className="grid--intro">
@@ -51,7 +51,7 @@ export default function IntroductionTab({ sites, site, stats, rows }) {
               height="100%"
               dark
               scrollZoom={false}
-              monitoringConfig={BIOFLOW_MONITORING_MAP}
+              monitoringConfig={MYCO_MONITORING_MAP}
             />
           </div>
 
@@ -59,12 +59,12 @@ export default function IntroductionTab({ sites, site, stats, rows }) {
             <section className="card card--light">
               <h2 className="card__title">Filtration Targets</h2>
               <p className="card__subtitle">
-                P: {Math.round(pProgress)}% · N: {Math.round(nProgress)}% complete
+                Phosphate: {Math.round(pProgress)}% · Nitrogen: {Math.round(nProgress)}% complete
               </p>
               <div className="filtration-targets filtration-targets--light">
                 <div className="filtration-targets__row">
                   <div className="filtration-targets__info">
-                    <span className="filtration-targets__name">Phosphorus</span>
+                    <span className="filtration-targets__name">Phosphate</span>
                     <span className="filtration-targets__range">{pBaseline.toFixed(2)} → {pTarget.toFixed(2)} mg/L</span>
                   </div>
                   <div className="filtration-targets__val">

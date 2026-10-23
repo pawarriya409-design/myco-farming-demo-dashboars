@@ -10,7 +10,7 @@ export default function Header({ sites, currentSiteId, onSiteChange, tab, onTabC
   return (
     <header className="app-header">
       <div className="brand">
-        <img className="brand__logo-img" src={`${import.meta.env.BASE_URL}myco-logo.png`} alt="Myco Farming" />
+        <span className="brand__logo-text">MycoFarming</span>
         <div className="brand__meta">
           <span className="brand__sub">Mycelium Water Filtration · Fleet Monitor</span>
         </div>

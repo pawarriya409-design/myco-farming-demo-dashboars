@@ -118,18 +118,18 @@ export default function App() {
       <footer className="app-footer">
         {site ? (
           <>
-            Data: {site.site_name} · {monitoring.length.toLocaleString()} readings · Myco Farming
+            Data: {site.site_name} · {monitoring.length.toLocaleString()} readings · MycoFarming
             Water Filtration
           </>
         ) : (
-          "Myco Farming Water Filtration"
+          "MycoFarming Water Filtration"
         )}
       </footer>
 
       {loading && (
         <div className="overlay">
           <div className="spinner" />
-          <div className="overlay__text">Loading Myco Farming dashboard…</div>
+          <div className="overlay__text">Loading MycoFarming dashboard…</div>
         </div>
       )}
       {error && !loading && (
