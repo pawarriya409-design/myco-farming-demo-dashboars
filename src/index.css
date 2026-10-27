@@ -312,13 +312,13 @@ body {
 .map-desc-side > .card { flex: 1 1 auto; }
 
 /* RIGHT half — diagram (left) + overview/alerts (right), gauges below */
-.prop-alerts-grid { display: grid; grid-template-columns: 1.3fr 1fr; gap: 16px; align-items: stretch; flex: 0 1 auto; min-height: 340px; }
+.prop-alerts-grid { display: grid; grid-template-columns: 1.3fr 1fr; gap: 16px; align-items: start; flex: 0 1 auto; min-height: 340px; }
 .container-status-group .prop-alerts-grid { min-height: 360px; }
 .container-diagram { display: flex; flex-direction: column; min-width: 0; min-height: 0; padding: 12px; background: rgba(255, 255, 255, .7); border: 1px solid var(--line); border-radius: var(--r-md); }
 .container-diagram .prop-alerts-diagram { flex: 1; }
 .prop-alerts-diagram { display: flex; flex-direction: column; min-width: 0; min-height: 0; }
 .prop-alerts-diagram svg { flex: 1 1 auto; min-height: 240px; width: 100%; }
-.prop-alerts-grid .module-cycle--inline { flex: 1 1 auto; }
+.prop-alerts-grid .module-cycle--inline { flex: 1 1 auto; padding: 12px; }
 
 /* Bottom cards (Site Parameters / gauges) stretch to identical heights, sized to content (no clipping) */
 .intro-col > section:last-child { flex: 2 1 auto; min-height: 0; }
