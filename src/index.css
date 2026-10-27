@@ -281,6 +281,16 @@ body {
 .dashboard-group--light { background: rgba(255, 255, 255, .42); }
 .dashboard-group--status { background: rgba(1, 59, 72, .045); border-color: rgba(1, 59, 72, .13); }
 .section-subtitle { margin: 0 0 8px; font-size: 12px; font-weight: 700; color: var(--teal-800); }
+.container-status__subheading {
+  margin: 0 0 10px;
+  font-family: var(--font-display);
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 1.3;
+  color: var(--teal-800);
+  letter-spacing: .2px;
+}
+.panel--status .container-status__subheading { color: #E8F3F2; }
 
 /* Section titles above each half (Site Details / Sensing Proposition) */
 .section-title {
