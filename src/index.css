@@ -64,8 +64,8 @@
   --r-lg: 20px;
   --r-pill: 999px;
 
-  --font-sans: "Poppins", system-ui, sans-serif;
-  --font-display: "Paytone One", "Poppins", sans-serif;
+  --font-sans: "Inter", system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+  --font-display: "Space Grotesk", "Inter", sans-serif;
 
   --header-h: 76px;
 }
