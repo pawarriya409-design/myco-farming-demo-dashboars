@@ -16,7 +16,6 @@ export default function App() {
   // { source: "remote" | "local", updatedAt: Date, remoteError?: string }
   const [dataStatus, setDataStatus] = useState(null);
 
-  const operationalSites = sites.filter((s) => s.status === "Operational");
   const site = sites.find((s) => s.site_id === currentSiteId) || null;
   const ready = Boolean(site) && monitoring.length > 0;
 
@@ -96,9 +95,6 @@ export default function App() {
   return (
     <>
       <Header
-        sites={operationalSites}
-        currentSiteId={currentSiteId}
-        onSiteChange={selectSite}
         tab={tab}
         onTabChange={setTab}
         onRefresh={refresh}

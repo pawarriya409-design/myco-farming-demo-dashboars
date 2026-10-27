@@ -39,20 +39,8 @@ function myceliumDots(cx, topY, h, seed) {
   return dots;
 }
 
-// Numbered callout badge
-function Badge({ x, y, n, fill }) {
-  return (
-    <g>
-      <circle cx={x} cy={y} r="9" fill={fill} stroke="#fff" strokeWidth="1.5" />
-      <text x={x} y={y + 3.5} textAnchor="middle" fontSize="10" fontWeight="700" fill="#fff">
-        {n}
-      </text>
-    </g>
-  );
-}
-
 // Diagram matching the saved reference image: top distribution pipe, 8 mycelium
-// capsule modules in a dashed border, numbered callouts, IN/OUT arrows, reservoir
+// capsule modules in a dashed border, IN/OUT arrows, reservoir
 export default function PropositionDiagram({ modules = 8, label = "Mycelium Biomass Modules" }) {
   const n = Math.max(1, Math.min(12, modules));
 
@@ -142,12 +130,6 @@ export default function PropositionDiagram({ modules = 8, label = "Mycelium Biom
       <rect x={resX} y={resY} width={resW} height={resH} rx="10" fill="url(#resGrad)" stroke="rgba(255,255,255,.18)" strokeWidth="1" />
       <text x={W / 2} y={resY + resH / 2 + 5} textAnchor="middle" fontSize="15" fontWeight="600" fill="#EAF5F7">water reservoir</text>
 
-      {/* numbered callouts */}
-      <Badge x={20} y={inY + 2} n="1" fill="#E08A1E" />
-      <Badge x={centers[Math.floor(n / 2)]} y={pipeY} n="2" fill="#012A33" />
-      <Badge x={centers[Math.min(4, n - 1)]} y={modY + 30} n="3" fill="#23C24E" />
-      <Badge x={resX - 18} y={outY} n="4" fill="#012A33" />
-      <Badge x={W - 20} y={outY + 2} n="5" fill="#23C24E" />
     </svg>
   );
 }

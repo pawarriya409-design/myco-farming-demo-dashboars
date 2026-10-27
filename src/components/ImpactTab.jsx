@@ -37,20 +37,24 @@ export default function ImpactTab({ site, stats, rows }) {
       {/* LEFT COLUMN */}
       <div className="impact-col">
         <section className="card anim-fade-up">
-          <h2 className="card__title">Water Treated</h2>
-          <p className="card__subtitle">Rolling window from latest reading</p>
+          <div className="water-treated__header">
+            <div>
+              <h2 className="card__title">Water Treated</h2>
+              <p className="card__subtitle">Rolling window from latest reading</p>
+            </div>
+            <div className="segmented" aria-label="Water treated time period">
+              {PERIODS.map((p) => (
+                <button key={p} className={`segmented__btn ${waterPeriod === p ? "is-active" : ""}`} onClick={() => setWaterPeriod(p)}>
+                  {p[0].toUpperCase() + p.slice(1)}
+                </button>
+              ))}
+            </div>
+          </div>
           <div className="kpi kpi--green" style={{ border: "none", padding: "18px" }}>
             <div className="kpi__label">Volume</div>
             <div className="kpi__value">
               {fmt(water, 0)} <span className="kpi__unit">m³ treated {waterPeriod}</span>
             </div>
-          </div>
-          <div className="segmented" style={{ marginTop: 16 }}>
-            {PERIODS.map((p) => (
-              <button key={p} className={`segmented__btn ${waterPeriod === p ? "is-active" : ""}`} onClick={() => setWaterPeriod(p)}>
-                {p[0].toUpperCase() + p.slice(1)}
-              </button>
-            ))}
           </div>
         </section>
 
@@ -75,7 +79,7 @@ export default function ImpactTab({ site, stats, rows }) {
 
           <div className="progress">
             <div className="progress__head">
-              <span className="progress__label">Phosphate — {site.baseline_p_mgL} → {site.target_p_mgL} mg/L</span>
+              <span className="progress__label">Phosphate · Baseline {site.baseline_p_mgL} → Target {site.target_p_mgL} mg/L</span>
               <span className="progress__pct">{Math.round(pProg)}%</span>
             </div>
             <div className="progress__track">
@@ -88,7 +92,7 @@ export default function ImpactTab({ site, stats, rows }) {
 
           <div className="progress">
             <div className="progress__head">
-              <span className="progress__label">Nitrogen — {site.baseline_n_mgL} → {site.target_n_mgL} mg/L</span>
+              <span className="progress__label">Nitrogen · Baseline {site.baseline_n_mgL} → Target {site.target_n_mgL} mg/L</span>
               <span className="progress__pct">{Math.round(nProg)}%</span>
             </div>
             <div className="progress__track">

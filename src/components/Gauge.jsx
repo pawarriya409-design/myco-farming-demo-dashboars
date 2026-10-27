@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { fmt, avgForPeriod } from "../lib/data.js";
 
 function polar(cx, cy, r, deg) {
@@ -26,7 +26,10 @@ const PERIODS = [
   { id: "monthly", label: "Monthly" },
 ];
 
-export default function Gauge({ metric, stats, rows, io, mode, period, onIO, onMode, onPeriod }) {
+export default function Gauge({ metric, stats, rows }) {
+  const [io, setIO] = useState("out");
+  const [mode, setMode] = useState("realtime");
+  const [period, setPeriod] = useState("monthly");
   const meta = METRIC_META[metric];
   const s = io === "in" ? stats[meta.inKey] : stats[meta.outKey];
 
@@ -57,8 +60,8 @@ export default function Gauge({ metric, stats, rows, io, mode, period, onIO, onM
       <div className="gauge__head">
         <span className="gauge__label">{metric}</span>
         <div className="io-toggle">
-          <button className={`io ${io === "in" ? "is-active" : ""}`} onClick={() => onIO("in")}>IN</button>
-          <button className={`io ${io === "out" ? "is-active" : ""}`} onClick={() => onIO("out")}>OUT</button>
+          <button className={`io ${io === "in" ? "is-active" : ""}`} onClick={() => setIO("in")}>IN</button>
+          <button className={`io ${io === "out" ? "is-active" : ""}`} onClick={() => setIO("out")}>OUT</button>
         </div>
       </div>
       <svg className="gauge__svg" viewBox="0 0 120 70">
@@ -74,13 +77,13 @@ export default function Gauge({ metric, stats, rows, io, mode, period, onIO, onM
         {mode === "realtime" ? "latest" : `avg · ${PERIODS.find((p) => p.id === period)?.label.toLowerCase()}`} · {io === "in" ? "inlet" : "outlet"}
       </div>
       <div className="gauge__modes">
-        <button className={`chip ${mode === "realtime" ? "is-active" : ""}`} onClick={() => onMode("realtime")}>Realtime</button>
-        <button className={`chip ${mode === "average" ? "is-active" : ""}`} onClick={() => onMode("average")}>Average</button>
+        <button className={`chip ${mode === "realtime" ? "is-active" : ""}`} onClick={() => setMode("realtime")}>Realtime</button>
+        <button className={`chip ${mode === "average" ? "is-active" : ""}`} onClick={() => setMode("average")}>Average</button>
       </div>
       {mode === "average" && (
         <div className="gauge__periods">
           {PERIODS.map((p) => (
-            <button key={p.id} className={`chip ${period === p.id ? "is-active" : ""}`} onClick={() => onPeriod(p.id)}>
+            <button key={p.id} className={`chip ${period === p.id ? "is-active" : ""}`} onClick={() => setPeriod(p.id)}>
               {p.label}
             </button>
           ))}

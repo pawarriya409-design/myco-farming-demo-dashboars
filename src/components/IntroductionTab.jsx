@@ -16,9 +16,6 @@ const METRIC_ROWS = [
 ];
 
 export default function IntroductionTab({ sites, site, stats, rows }) {
-  const [gaugeIO, setGaugeIO] = useState("out");
-  const [gaugeMode, setGaugeMode] = useState("realtime");
-  const [gaugePeriod, setGaugePeriod] = useState("monthly");
   const [cycleView, setCycleView] = useState("overview");
   const alerts = computeAlerts(site, stats);
 
@@ -43,32 +40,36 @@ export default function IntroductionTab({ sites, site, stats, rows }) {
     <div className="grid--intro">
       {/* LEFT HALF — Map + Targets / Description, then Table */}
       <div className="intro-col">
-        <h3 className="section-title">Site Details</h3>
-        <div className="map-desc-grid anim-fade-up">
-          <div className="map-wrap">
-            <SitesMap
-              sites={sites}
-              height="100%"
-              dark
-              scrollZoom={false}
-              monitoringConfig={MYCO_MONITORING_MAP}
-            />
-          </div>
+        <section className="dashboard-group dashboard-group--light site-details-group anim-fade-up" aria-labelledby="site-details-heading">
+          <h3 className="section-title" id="site-details-heading">Site Details</h3>
+          <div className="map-desc-grid">
+            <div className="map-wrap">
+              <SitesMap
+                sites={sites}
+                height="100%"
+                dark
+                scrollZoom={false}
+                monitoringConfig={MYCO_MONITORING_MAP}
+              />
+            </div>
 
-          <div className="map-desc-side">
-            <section className="card card--light">
+            <div className="map-desc-side">
+              <section className="card card--light">
               <h2 className="card__title">Filtration Targets</h2>
               <p className="card__subtitle">
                 Phosphate: {Math.round(pProgress)}% · Nitrogen: {Math.round(nProgress)}% complete
               </p>
+              <div className="filtration-targets__key" aria-label="Concentration values: baseline, target, current outlet">
+                <span>Baseline</span><span aria-hidden="true">→</span><span>Target</span><span>Current outlet below</span>
+              </div>
               <div className="filtration-targets filtration-targets--light">
                 <div className="filtration-targets__row">
                   <div className="filtration-targets__info">
                     <span className="filtration-targets__name">Phosphate</span>
-                    <span className="filtration-targets__range">{pBaseline.toFixed(2)} → {pTarget.toFixed(2)} mg/L</span>
+                    <span className="filtration-targets__range">Baseline {pBaseline.toFixed(2)} · Target {pTarget.toFixed(2)} mg/L</span>
                   </div>
                   <div className="filtration-targets__val">
-                    <span className="filtration-targets__current">{pLatest != null ? pLatest.toFixed(3) : "—"} mg/L</span>
+                    <span className="filtration-targets__current">Current {pLatest != null ? pLatest.toFixed(3) : "—"} mg/L</span>
                     <div className="progress progress--compact">
                       <div className="progress__fill" style={{ width: `${pProgress}%` }} />
                     </div>
@@ -77,61 +78,75 @@ export default function IntroductionTab({ sites, site, stats, rows }) {
                 <div className="filtration-targets__row">
                   <div className="filtration-targets__info">
                     <span className="filtration-targets__name">Nitrogen</span>
-                    <span className="filtration-targets__range">{nBaseline.toFixed(2)} → {nTarget.toFixed(2)} mg/L</span>
+                    <span className="filtration-targets__range">Baseline {nBaseline.toFixed(2)} · Target {nTarget.toFixed(2)} mg/L</span>
                   </div>
                   <div className="filtration-targets__val">
-                    <span className="filtration-targets__current">{nLatest != null ? nLatest.toFixed(3) : "—"} mg/L</span>
+                    <span className="filtration-targets__current">Current {nLatest != null ? nLatest.toFixed(3) : "—"} mg/L</span>
                     <div className="progress progress--compact">
                       <div className="progress__fill" style={{ width: `${nProgress}%` }} />
                     </div>
                   </div>
+                  <div className="filtration-targets__key" aria-label="Target bar key">
+                    <span><i className="filtration-targets__key-mark filtration-targets__key-mark--baseline" />Baseline</span>
+                    <span><i className="filtration-targets__key-mark filtration-targets__key-mark--current" />Reduction</span>
+                    <span><i className="filtration-targets__key-mark filtration-targets__key-mark--target" />Target</span>
+                  </div>
                 </div>
-              </div>
-            </section>
+                </div>
+              </section>
 
-            <p className="intro-description">{description}</p>
+              <section className="solution-description">
+                <h4 className="section-subtitle">Solution description</h4>
+                <p className="intro-description">{description}</p>
+              </section>
+            </div>
           </div>
-        </div>
 
-        <section className="card card--light anim-fade-up" style={{ animationDelay: ".1s" }}>
-          <h2 className="card__title">Site Parameters</h2>
-          <p className="card__subtitle">Deployment &amp; water-quality targets</p>
-          <table className="metric-table">
-            <thead>
-              <tr>
-                <th>Metric</th>
-                <th style={{ textAlign: "right" }}>Value</th>
-                <th style={{ textAlign: "right" }}>Unit</th>
-              </tr>
-            </thead>
-            <tbody>
-              {METRIC_ROWS.map(([name, key, unit]) => {
-                const decimals =
-                  key === "area_ha" || key === "depth_m" ? 1
-                  : key === "baseline_p_mgL" || key === "target_p_mgL" ? 2
-                  : 0;
-                return (
-                  <tr key={key}>
-                    <td className="metric-name">{name}</td>
-                    <td className="metric-value">{fmt(site[key], decimals)}</td>
-                    <td className="metric-unit">{unit}</td>
-                  </tr>
-                );
-              })}
-            </tbody>
-          </table>
+          <section className="card card--light site-parameters anim-fade-up" style={{ animationDelay: ".1s" }}>
+            <h2 className="card__title">Site Parameters</h2>
+            <p className="card__subtitle">Deployment &amp; water-quality targets</p>
+            <table className="metric-table">
+              <thead>
+                <tr>
+                  <th>Metric</th>
+                  <th style={{ textAlign: "right" }}>Value</th>
+                  <th style={{ textAlign: "right" }}>Unit</th>
+                </tr>
+              </thead>
+              <tbody>
+                {METRIC_ROWS.map(([name, key, unit]) => {
+                  const decimals =
+                    key === "area_ha" || key === "depth_m" || key === "baseline_n_mgL" || key === "target_n_mgL" ? 1
+                    : key === "baseline_p_mgL" || key === "target_p_mgL" ? 2
+                    : 0;
+                  return (
+                    <tr key={key}>
+                      <td className="metric-name">{name}</td>
+                      <td className="metric-value">{fmt(site[key], decimals)}</td>
+                      <td className="metric-unit">{unit}</td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
+          </section>
         </section>
       </div>
 
       {/* RIGHT HALF — Diagram + Overview/Alerts, then Gauges */}
       <div className="intro-col">
-        <h3 className="section-title">Sensing Proposition</h3>
-        <div className="prop-alerts-grid anim-fade-up">
-          <div className="prop-alerts-diagram">
-            <PropositionDiagram modules={Number(site.modules) || 8} />
-          </div>
+        <section className="dashboard-group dashboard-group--status container-status-group anim-fade-up" aria-labelledby="container-status-heading">
+          <h3 className="section-title" id="container-status-heading">Container Status</h3>
+          <div className="prop-alerts-grid">
+            <section className="container-diagram" aria-labelledby="container-diagram-heading">
+              <h2 className="container-status__subheading" id="container-diagram-heading">MycoContainer overview</h2>
+              <div className="prop-alerts-diagram">
+                <PropositionDiagram modules={Number(site.modules) || 8} />
+              </div>
+            </section>
 
           <div className="module-cycle module-cycle--inline">
+            <h2 className="container-status__subheading">Alerts and Notifications</h2>
             <div className="module-cycle__toggle">
               <button className={`module-cycle__btn ${cycleView === "overview" ? "is-active" : ""}`} onClick={() => setCycleView("overview")}>
                 Overview
@@ -169,17 +184,19 @@ export default function IntroductionTab({ sites, site, stats, rows }) {
                 ))}
               </div>
             )}
+            </div>
           </div>
-        </div>
 
-        <section className="card panel--status anim-fade-up" style={{ animationDelay: ".12s" }}>
-          <div className="gauges gauges--2x2">
-            <Gauge metric="flow" stats={stats} rows={rows} io={gaugeIO} mode={gaugeMode} period={gaugePeriod} onIO={setGaugeIO} onMode={setGaugeMode} onPeriod={setGaugePeriod} />
-            <Gauge metric="temp" stats={stats} rows={rows} io={gaugeIO} mode={gaugeMode} period={gaugePeriod} onIO={setGaugeIO} onMode={setGaugeMode} onPeriod={setGaugePeriod} />
-            <Gauge metric="pressure" stats={stats} rows={rows} io={gaugeIO} mode={gaugeMode} period={gaugePeriod} onIO={setGaugeIO} onMode={setGaugeMode} onPeriod={setGaugePeriod} />
-            <Gauge metric="humidity" stats={stats} rows={rows} io={gaugeIO} mode={gaugeMode} period={gaugePeriod} onIO={setGaugeIO} onMode={setGaugeMode} onPeriod={setGaugePeriod} />
-          </div>
-        </section>
+          <section className="panel--status container-readings" aria-labelledby="container-readings-heading">
+            <h2 className="container-status__subheading" id="container-readings-heading">Container Sensor Readings</h2>
+            <div className="gauges gauges--2x2">
+              <Gauge metric="flow" stats={stats} rows={rows} />
+              <Gauge metric="temp" stats={stats} rows={rows} />
+              <Gauge metric="pressure" stats={stats} rows={rows} />
+              <Gauge metric="humidity" stats={stats} rows={rows} />
+            </div>
+          </section>
+          </section>
       </div>
     </div>
   );

@@ -6,7 +6,7 @@ const TABS = [
   { id: "impact", label: "Impact" },
 ];
 
-export default function Header({ sites, currentSiteId, onSiteChange, tab, onTabChange, onRefresh, refreshing, dataStatus }) {
+export default function Header({ tab, onTabChange, onRefresh, refreshing, dataStatus }) {
   return (
     <header className="app-header">
       <div className="brand">
@@ -17,19 +17,6 @@ export default function Header({ sites, currentSiteId, onSiteChange, tab, onTabC
       </div>
 
       <div className="header-controls">
-        <select
-          className="site-select__select"
-          value={currentSiteId || ""}
-          onChange={(e) => onSiteChange(e.target.value)}
-          aria-label="Select site"
-        >
-          {sites.map((s) => (
-            <option key={s.site_id} value={s.site_id}>
-              {s.site_name} · {s.country}
-            </option>
-          ))}
-        </select>
-
         <nav className="tabs" role="tablist">
           {TABS.map((t) => (
             <button
