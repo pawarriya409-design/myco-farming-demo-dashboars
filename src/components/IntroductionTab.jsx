@@ -59,9 +59,6 @@ export default function IntroductionTab({ sites, site, stats, rows }) {
               <p className="card__subtitle">
                 Phosphate: {Math.round(pProgress)}% · Nitrogen: {Math.round(nProgress)}% complete
               </p>
-              <div className="filtration-targets__key" aria-label="Concentration values: baseline, target, current outlet">
-                <span>Baseline</span><span aria-hidden="true">→</span><span>Target</span><span>Current outlet below</span>
-              </div>
               <div className="filtration-targets filtration-targets--light">
                 <div className="filtration-targets__row">
                   <div className="filtration-targets__info">
@@ -71,7 +68,9 @@ export default function IntroductionTab({ sites, site, stats, rows }) {
                   <div className="filtration-targets__val">
                     <span className="filtration-targets__current">Current {pLatest != null ? pLatest.toFixed(3) : "—"} mg/L</span>
                     <div className="progress progress--compact">
-                      <div className="progress__fill" style={{ width: `${pProgress}%` }} />
+                      <div className="progress__track">
+                        <div className="progress__fill" style={{ width: `${Math.max(0, Math.min(100, pProgress))}%` }} />
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -83,13 +82,10 @@ export default function IntroductionTab({ sites, site, stats, rows }) {
                   <div className="filtration-targets__val">
                     <span className="filtration-targets__current">Current {nLatest != null ? nLatest.toFixed(3) : "—"} mg/L</span>
                     <div className="progress progress--compact">
-                      <div className="progress__fill" style={{ width: `${nProgress}%` }} />
+                      <div className="progress__track">
+                        <div className="progress__fill" style={{ width: `${Math.max(0, Math.min(100, nProgress))}%` }} />
+                      </div>
                     </div>
-                  </div>
-                  <div className="filtration-targets__key" aria-label="Target bar key">
-                    <span><i className="filtration-targets__key-mark filtration-targets__key-mark--baseline" />Baseline</span>
-                    <span><i className="filtration-targets__key-mark filtration-targets__key-mark--current" />Reduction</span>
-                    <span><i className="filtration-targets__key-mark filtration-targets__key-mark--target" />Target</span>
                   </div>
                 </div>
                 </div>
