@@ -50,7 +50,7 @@ export default function ComplianceChart({ rows, nutrient, target }) {
             />
             <Legend wrapperStyle={{ fontSize: 12 }} />
             {t !== null && (
-              <ReferenceLine y={t} stroke="#6D4AE0" strokeDasharray="4 4" label={{ value: "Target", position: "right", fill: "#6D4AE0", fontSize: 11 }} />
+              <ReferenceLine y={t} stroke="#6D4AE0" strokeDasharray="4 4" label={{ value: "Target", position: "insideLeft", dx: 4, dy: -8, fill: "#6D4AE0", fontSize: 11 }} />
             )}
             <Line type="monotone" dataKey="Measured" stroke="#12809A" strokeWidth={2.5} dot={{ r: 3 }} activeDot={{ r: 5 }} />
             <Line type="monotone" dataKey="Projection" stroke="#7C5CFC" strokeWidth={2} strokeDasharray="6 4" dot={{ r: 3 }} />
